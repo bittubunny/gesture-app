@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
-from utils import save_data, train_model, predict_hand_sign, NUM_LANDMARKS
+from backend.utils import save_data, train_model, predict_hand_sign, NUM_LANDMARKS
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})  # Fixes OPTIONS preflight

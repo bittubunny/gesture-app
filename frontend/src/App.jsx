@@ -16,37 +16,31 @@ export default function App() {
         <label>User ID:</label>
         <input
           value={userId}
-          onChange={e => setUserId(e.target.value)}
+          onChange={(e) => setUserId(e.target.value)}
         />
       </div>
 
       <hr />
 
       <div className="step-buttons">
-        <button
-          onClick={() => setStep(1)}
-          className={step === 1 ? "active" : ""}
-        >
+        <button onClick={() => setStep(1)} className={step === 1 ? "active" : ""}>
           1. Record
         </button>
-        <button
-          onClick={() => setStep(2)}
-          className={step === 2 ? "active" : ""}
-        >
+        <button onClick={() => setStep(2)} className={step === 2 ? "active" : ""}>
           2. Train
         </button>
-        <button
-          onClick={() => setStep(3)}
-          className={step === 3 ? "active" : ""}
-        >
+        <button onClick={() => setStep(3)} className={step === 3 ? "active" : ""}>
           3. Recognize
         </button>
       </div>
 
       <p className="instructions">
-        {step === 1 && "Step 1: Record your personal hand signs. Enter a label and capture multiple samples."}
-        {step === 2 && "Step 2: Train your hand sign model. Make sure you recorded enough samples."}
-        {step === 3 && "Step 3: Recognize your hand signs live using the webcam."}
+        {step === 1 &&
+          "Step 1: Record your personal hand signs. Enter a label and capture multiple samples."}
+        {step === 2 &&
+          "Step 2: Train your hand sign model. Make sure you recorded enough samples."}
+        {step === 3 &&
+          "Step 3: Recognize your hand signs live using the webcam."}
       </p>
 
       <hr />

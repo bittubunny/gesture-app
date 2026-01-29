@@ -33,18 +33,13 @@ export default function HandSignRecorder({ userId }) {
   const onResults = (results) => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-
     ctx.save();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(results.image, 0, 0, canvas.width, canvas.height);
 
-    if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+    if (results.multiHandLandmarks?.length > 0) {
       const landmarks = results.multiHandLandmarks[0];
-
-      drawConnectors(ctx, landmarks, Hands.HAND_CONNECTIONS, {
-        color: "#00FF00",
-        lineWidth: 2,
-      });
+      drawConnectors(ctx, landmarks, Hands.HAND_CONNECTIONS, { color: "#00FF00", lineWidth: 2 });
       drawLandmarks(ctx, landmarks, { color: "#FF0000", lineWidth: 1 });
 
       const flat = [];
@@ -71,6 +66,7 @@ export default function HandSignRecorder({ userId }) {
       await captureHandSign(userId, canvasRef.current.landmarks, label);
       setSamples((prev) => prev + 1);
       setMsg(`Captured for "${label}" | Total samples: ${samples + 1}`);
+      setTimeout(() => setMsg(""), 3000);
     } catch (err) {
       setMsg(err.response?.data?.msg || "Error capturing landmarks");
     }
@@ -81,8 +77,11 @@ export default function HandSignRecorder({ userId }) {
     const video = webcamRef.current.video;
     if (!video || video.readyState !== 4) return;
 
-    await hands.send({ image: video });
-    requestAnimationFrame(runHands);
+    const process = async () => {
+      await hands.send({ image: video });
+      requestAnimationFrame(process);
+    };
+    process();
   };
 
   return (
@@ -107,10 +106,7 @@ export default function HandSignRecorder({ userId }) {
         <canvas ref={canvasRef} />
       </div>
 
-      <button
-        onClick={runHands}
-        className="recorder-button recorder-secondary-btn"
-      >
+      <button onClick={runHands} className="recorder-button recorder-secondary-btn">
         Start Detection
       </button>
 

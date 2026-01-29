@@ -39,7 +39,6 @@ export default function HandSignRecognizer({ userId }) {
 
     if (results.multiHandLandmarks?.length > 0) {
       const landmarks = results.multiHandLandmarks[0];
-
       drawConnectors(ctx, landmarks, Hands.HAND_CONNECTIONS, { color: "#00FF00", lineWidth: 2 });
       drawLandmarks(ctx, landmarks, { color: "#FF0000", lineWidth: 1 });
 
@@ -56,6 +55,8 @@ export default function HandSignRecognizer({ userId }) {
           setPrediction("Prediction error");
         }
       }
+    } else {
+      setPrediction("No hand detected");
     }
 
     ctx.restore();
